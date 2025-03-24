@@ -13,6 +13,8 @@ phases:
       - zip client.zip appspec.yml index.hmtl package.json
   post_build:
     commands:
+      - echo "Checking if zip is created"
+      - ls -a
       - echo "Moving zip file to S3"
       - aws s3 cp client.zip s3://terraform-20250212151906931400000001/client/client.zip
       - echo "Build completed successfully!"
