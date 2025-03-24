@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+  pre_build:
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+  build:
+    commands:
+      - zip client.zip appspec.yml index.hmtl package.json
+  post_build:
+    commands:
+      - echo "Moving zip file to S3"
+      - aws s3 cp client.zip s3://terraform-20250212151906931400000001/client/client.zip
+      - echo "Build completed successfully!"
+artifacts:
+  files:
+    - '**/*'
